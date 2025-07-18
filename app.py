@@ -9,13 +9,13 @@ st.title("🧠 Advanced Simulated BCI Emotion Decoder")
 # 1. Sliders to simulate multiple brainwave band strengths
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    alpha = st.slider("Alpha (Calm)", 0.0, 2.0, 1.0, 0.01)
+    alpha = st.slider("Alpha", 0.0, 2.0, 1.0, 0.01)
 with col2:
-    beta = st.slider("Beta (Alert)", 0.0, 2.0, 1.0, 0.01)
+    beta = st.slider("Beta", 0.0, 2.0, 1.0, 0.01)
 with col3:
-    theta = st.slider("Theta (Drowsy)", 0.0, 2.0, 0.5, 0.01)
+    theta = st.slider("Theta", 0.0, 2.0, 0.5, 0.01)
 with col4:
-    gamma = st.slider("Gamma (Excited)", 0.0, 2.0, 0.5, 0.01)
+    gamma = st.slider("Gamma", 0.0, 2.0, 0.5, 0.01)
 
 # 2. Simulate 30s of multi-band data (for visualization)
 t = np.arange(0, 30, 0.5)
