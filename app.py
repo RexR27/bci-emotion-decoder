@@ -24,16 +24,19 @@ st.markdown("""
 # Header
 st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Simulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
-# Brainwave Sliders
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    alpha = st.slider("Alpha", 0.0, 2.0, 1.0, 0.01)
+    st.markdown("**🧠 Alpha**")
+    alpha = st.slider("", 0.0, 2.0, 1.0, 0.01, key="alpha")
 with col2:
-    beta = st.slider("Beta", 0.0, 2.0, 1.0, 0.01)
+    st.markdown("**⚡ Beta**")
+    beta = st.slider("", 0.0, 2.0, 1.0, 0.01, key="beta")
 with col3:
-    theta = st.slider("Theta", 0.0, 2.0, 0.5, 0.01)
+    st.markdown("**🌙 Theta**")
+    theta = st.slider("", 0.0, 2.0, 0.5, 0.01, key="theta")
 with col4:
-    gamma = st.slider("Gamma", 0.0, 2.0, 0.5, 0.01)
+    st.markdown("**🚀 Gamma**")
+    gamma = st.slider("", 0.0, 2.0, 0.5, 0.01, key="gamma")
 
 # Simulated EEG data
 t = np.arange(0, 30, 0.5)
