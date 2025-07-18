@@ -1,14 +1,30 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="🧠 Advanced BCI Emotion Decoder", layout="wide")
 
-# Larger styled title
+# Custom CSS for font enhancements
+st.markdown("""
+    <style>
+    .css-1r6slb0 p {
+        font-size: 22px !important;
+        font-weight: 600;
+        color: #444;
+    }
+    .big-text {
+        font-size: 40px !important;
+        color: green;
+        font-weight: bold;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Header
 st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Simulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
-# 1. Sliders to simulate multiple brainwave band strengths
+# Brainwave Sliders
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     alpha = st.slider("Alpha", 0.0, 2.0, 1.0, 0.01)
@@ -19,29 +35,40 @@ with col3:
 with col4:
     gamma = st.slider("Gamma", 0.0, 2.0, 0.5, 0.01)
 
-# 2. Simulate 30s of multi-band data (for visualization)
+# Simulated EEG data
 t = np.arange(0, 30, 0.5)
-data = {
+df = pd.DataFrame({
     "Time (s)": t,
-    "Alpha": alpha * np.sin(2 * np.pi * 0.5 * t) + np.random.randn(len(t))*0.1,
-    "Beta": beta * np.sin(2 * np.pi * 1.0 * t) + np.random.randn(len(t))*0.1,
-    "Theta": theta * np.sin(2 * np.pi * 0.2 * t) + np.random.randn(len(t))*0.1,
-    "Gamma": gamma * np.sin(2 * np.pi * 5.0 * t) + np.random.randn(len(t))*0.1,
-}
-df = pd.DataFrame(data)
+    "Alpha": alpha * np.sin(2 * np.pi * 0.5 * t) + np.random.randn(len(t)) * 0.1,
+    "Beta": beta * np.sin(2 * np.pi * 1.0 * t) + np.random.randn(len(t)) * 0.1,
+    "Theta": theta * np.sin(2 * np.pi * 0.2 * t) + np.random.randn(len(t)) * 0.1,
+    "Gamma": gamma * np.sin(2 * np.pi * 5.0 * t) + np.random.randn(len(t)) * 0.1
+})
 
-# 3. Plot multi-band chart
-fig = px.line(df, x="Time (s)", y=["Alpha", "Beta", "Theta", "Gamma"],
-              title="Simulated EEG Band Powers")
+# Enhanced EEG Chart with title
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=df["Time (s)"], y=df["Alpha"], name="Alpha", line=dict(color='blue')))
+fig.add_trace(go.Scatter(x=df["Time (s)"], y=df["Beta"], name="Beta", line=dict(color='red')))
+fig.add_trace(go.Scatter(x=df["Time (s)"], y=df["Theta"], name="Theta", line=dict(color='green')))
+fig.add_trace(go.Scatter(x=df["Time (s)"], y=df["Gamma"], name="Gamma", line=dict(color='purple')))
+
+fig.update_layout(
+    title="<b style='font-size:28px'>📊 Simulated EEG Band Powers</b>",
+    xaxis_title="Time (s)",
+    yaxis_title="Amplitude",
+    template="plotly_white",
+    legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5),
+    margin=dict(t=60, b=100)
+)
 st.plotly_chart(fig, use_container_width=True)
 
-# 4. Decode into an emotion
+# Emotion decoder function
 def decode_emotion(a, b, t, g):
     values = [a, b, t, g]
     labels = ["Alpha", "Beta", "Theta", "Gamma"]
     max_value = max(values)
     dominant = labels[values.index(max_value)]
-    
+
     if max_value < 0.3:
         return "🤔 Neutral"
     if max_value < 0.5:
@@ -57,7 +84,7 @@ def decode_emotion(a, b, t, g):
     if a > 0.7 and b > 0.7:
         return "😊 Happy"
     if b > 0.7 and t > 0.7:
-        return "😰 Anxious" if b > t else "😔 Melancholy"
+        return "😰 Anxious" if b > t else "😔 Feeling Low"
     if t > 0.7 and g > 0.7:
         return "😵 Confused"
     if a > 0.7 and t > 0.7:
@@ -90,10 +117,10 @@ def decode_emotion(a, b, t, g):
         return "💤 Deep Sleep" if t > 1.4 else "😴 Sleepy"
     if dominant == "Gamma" and g > 0.5:
         return "🤪 Hyperactive" if g > 1.4 else "🔥 Energetic"
-    
+
     return "🤔 Neutral"
 
-# 5. Emotion Output with Larger Font
+# Decode button
 if st.button("🕵️ Decode Emotion"):
     emotion = decode_emotion(alpha, beta, theta, gamma)
-    st.markdown(f"<h2 style='font-size: 40px; color: green;'>AI guesses you are feeling {emotion}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<div class='big-text'>AI guesses you are feeling {emotion}</div>", unsafe_allow_html=True)
