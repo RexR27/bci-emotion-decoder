@@ -4,7 +4,9 @@ import pandas as pd
 import plotly.express as px
 
 st.set_page_config(page_title="🧠 Advanced BCI Emotion Decoder", layout="wide")
-st.title("🧠 Advanced Simulated BCI Emotion Decoder")
+
+# Larger styled title
+st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Simulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
 # 1. Sliders to simulate multiple brainwave band strengths
 col1, col2, col3, col4 = st.columns(4)
@@ -40,14 +42,11 @@ def decode_emotion(a, b, t, g):
     max_value = max(values)
     dominant = labels[values.index(max_value)]
     
-    # If all signals are very low -> Neutral
     if max_value < 0.3:
         return "🤔 Neutral"
-    # If all are low-to-moderate -> Bored
     if max_value < 0.5:
         return "😐 Bored"
 
-    # Complex mixing patterns (3 bands high)
     if a > 0.8 and b > 0.8 and g > 0.8:
         return "🤩 Euphoric"
     if b > 0.8 and t > 0.8 and g > 0.8:
@@ -55,7 +54,6 @@ def decode_emotion(a, b, t, g):
     if a > 0.8 and t > 0.8 and b > 0.8:
         return "😴 Drowsy-Alert"
 
-    # Two-band combinations
     if a > 0.7 and b > 0.7:
         return "😊 Happy"
     if b > 0.7 and t > 0.7:
@@ -68,8 +66,7 @@ def decode_emotion(a, b, t, g):
         return "😄 Excited" if g > b else "🤯 Stressed"
     if a > 0.7 and g > 0.7:
         return "🤗 Blissful"
-    
-    # High single band + moderate others
+
     if b > 1.2 and t > 0.5:
         return "😤 Frustrated"
     if t > 1.2 and b > 0.5:
@@ -82,11 +79,9 @@ def decode_emotion(a, b, t, g):
         return "😇 Calm"
     if t > 1.2 and a < 0.4:
         return "😴 Sleepy"
-    # New: high arousal (beta+gamma) → Fear
     if b > 1.2 and g > 0.5 and a < 0.5:
         return "😱 Fearful"
 
-    # Dominant single band patterns
     if dominant == "Alpha" and a > 0.5:
         return "🧘 Meditative" if a > 1.4 else "😌 Calm"
     if dominant == "Beta" and b > 0.5:
@@ -96,9 +91,9 @@ def decode_emotion(a, b, t, g):
     if dominant == "Gamma" and g > 0.5:
         return "🤪 Hyperactive" if g > 1.4 else "🔥 Energetic"
     
-    # Fallback
     return "🤔 Neutral"
 
+# 5. Emotion Output with Larger Font
 if st.button("🕵️ Decode Emotion"):
     emotion = decode_emotion(alpha, beta, theta, gamma)
-    st.success(f"AI guesses you are feeling **{emotion}**!")
+    st.markdown(f"<h2 style='font-size: 40px; color: green;'>AI guesses you are feeling {emotion}</h2>", unsafe_allow_html=True)
