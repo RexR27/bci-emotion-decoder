@@ -22,11 +22,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header
-st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Simulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Stimulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.markdown("**🧠 Alpha**")
+    st.markdown("<h1**🧠 Alpha**</h1>")
     alpha = st.slider("", 0.0, 2.0, 1.0, 0.01, key="alpha")
 with col2:
     st.markdown("**⚡ Beta**")
