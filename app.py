@@ -25,18 +25,23 @@ st.markdown("""
 st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Stimulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
+
 with col1:
-    st.markdown("<h1**🧠 Alpha**</h1>")
+    st.markdown("<div style='font-size:24px; font-weight:bold;'>🧠 Alpha</div>", unsafe_allow_html=True)
     alpha = st.slider("", 0.0, 2.0, 1.0, 0.01, key="alpha")
+
 with col2:
-    st.markdown("**⚡ Beta**")
+    st.markdown("<div style='font-size:24px; font-weight:bold;'>⚡ Beta</div>", unsafe_allow_html=True)
     beta = st.slider("", 0.0, 2.0, 1.0, 0.01, key="beta")
+
 with col3:
-    st.markdown("**🌙 Theta**")
+    st.markdown("<div style='font-size:24px; font-weight:bold;'>🌙 Theta</div>", unsafe_allow_html=True)
     theta = st.slider("", 0.0, 2.0, 0.5, 0.01, key="theta")
+
 with col4:
-    st.markdown("**🚀 Gamma**")
+    st.markdown("<div style='font-size:24px; font-weight:bold;'>🚀 Gamma</div>", unsafe_allow_html=True)
     gamma = st.slider("", 0.0, 2.0, 0.5, 0.01, key="gamma")
+
 
 # Simulated EEG data
 t = np.arange(0, 30, 0.5)
