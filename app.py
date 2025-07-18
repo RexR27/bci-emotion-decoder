@@ -25,7 +25,6 @@ st.markdown("""
 st.markdown("<h1 style='font-size: 48px; color: #4A90E2;'>🧠 Advanced Stimulated BCI Emotion Decoder</h1>", unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
-
 with col1:
     st.markdown("<div style='font-size:24px; font-weight:bold;'>🧠 Alpha</div>", unsafe_allow_html=True)
     alpha = st.slider("", 0.0, 2.0, 1.0, 0.01, key="alpha")
